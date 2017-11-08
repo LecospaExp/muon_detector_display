@@ -1,4 +1,4 @@
-var socket = io('http://192.168.0.118:5000');
+var socket = io('http://140.112.104.83:9487');
 
 var channel_count = [0,0,0,0,0,0,0,0,0];
 
