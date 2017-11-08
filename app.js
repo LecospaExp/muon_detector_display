@@ -8,7 +8,7 @@ var serialport = require("serialport");
 app.listen(5000);
 
 
-var portName = '/dev/ttyUSB0'; //This is the standard Raspberry Pi Serial port
+var portName = '/dev/ttyAMA0'; //This is the standard Raspberry Pi Serial port
 var readData = ''; //Array to hold the values read in from the port
 var sp = new serialport(portName, {
   baudRate: 115200,
