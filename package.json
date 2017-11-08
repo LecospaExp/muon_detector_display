@@ -22,7 +22,8 @@
     "url": "https://github.com/jaredwolff/nodejs-websocket-example/issues"
   },
   "homepage": "https://github.com/jaredwolff/nodejs-websocket-example#readme",
-  "devDependencies": {
-    "socket.io": "^1.7.3"
+  "Dependencies": {
+    "socket.io": "^1.7.3",
+    "serialport": "2.0.6"
   }
 }

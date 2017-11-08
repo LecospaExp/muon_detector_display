@@ -2,10 +2,23 @@ var app = require('http').createServer(handler)
 var io = require('socket.io')(app)
 var url = require('url')
 var fs = require('fs')
-
+var serialport = require("serialport");
 
 //This will open a server at localhost:5000. Navigate to this in your browser.
 app.listen(5000);
+
+
+var portName = '/dev/ttyUSB0'; //This is the standard Raspberry Pi Serial port
+var readData = ''; //Array to hold the values read in from the port
+var sp = new serialport(portName, {
+  baudRate: 115200,
+  dataBits: 8,
+  parity: 'none',
+  stopBits: 1,
+  flowControl: false
+});
+
+
 
 // Http handler function
 function handler (req, res) {
@@ -62,4 +75,12 @@ io.sockets.on('connection', function (socket) {
 
   });
   
+});
+
+sp.on('data', function (data) {
+  data = data.toString().split("");
+  for (var i = 0; i < data.length; i++) {
+    io.sockets.emit('hit', data[i]);
+    console.log(data[i]);
+  }
 });
