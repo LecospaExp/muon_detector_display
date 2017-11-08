@@ -5,7 +5,7 @@ var fs = require('fs')
 var serialport = require("serialport");
 
 //This will open a server at localhost:5000. Navigate to this in your browser.
-app.listen(5000);
+app.listen(9487);
 
 
 var portName = '/dev/ttyAMA0'; //This is the standard Raspberry Pi Serial port
