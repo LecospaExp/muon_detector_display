@@ -21,22 +21,24 @@ var channel_count = [0,0,0,0,0,0,0,0,0];
 
 	var gd = gd3.node();
 
-	Plotly.plot(gd, [{
-	    type: 'bar',
-	    x: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+	var data_set = {
+		type: 'bar',
+		x: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 	    y: channel_count,
-	    marker: {
-	        color: '#C8A2C8',
-	        line: {
-	            width: 2.5
-	        }
-	    }
-	}], {
-	    title: 'Count-Channel',
-	    font: {
-	        size: 16
-	    }
-	});
+	    marker:{
+	    	color: '#C8A2C8',
+	    	line: {width: 2.5}
+	    } 
+	};
+
+	var data = [data_set];
+
+	var layout = {
+		title: 'Count-Channel',
+		font: {size: 16}
+	};
+
+	Plotly.plot(gd, data, layout, {displayModeBar: false});
 
 	window.onresize = function() {
 	    Plotly.Plots.resize(gd);
