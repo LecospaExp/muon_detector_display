@@ -1,77 +1,34 @@
-var app = require('http').createServer(handler)
-var io = require('socket.io')(app)
-var url = require('url')
-var fs = require('fs')
-var serialport = require("serialport");
+var url         = require('url'), 
+    fs          = require('fs'), 
+    serialport  = require("serialport"),
+    express     = require('express'),
+    app         = express(),
+    path        = require('path'),
+    http        = require('http').Server(app),
+    io          = require('socket.io')(http), 
+    session     = require('express-session'),
+    mongoose    = require('mongoose'),
+    DBconfig    = require('./config/db')
+    mongojs     = require('mongojs'),
+    db          = mongojs(DBconfig.url, ['events'])
+    i18n        = require('./lang/i18n');
 
-//This will open a server at localhost:5000. Navigate to this in your browser.
-app.listen(9487);
+// connect DB
+mongoose.connect(DBconfig.url);
+
+// express setup
+app.set('port', 9487)
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
+
+var router = require('./router.js')();
+app.use('/', router);
+http.listen(9487)
 
 
-var portName = '/dev/ttyAMA0'; //This is the standard Raspberry Pi Serial port
-var readData = ''; //Array to hold the values read in from the port
-var sp = new serialport(portName, {
-  baudRate: 115200,
-  dataBits: 8,
-  parity: 'none',
-  stopBits: 1,
-  flowControl: false
-});
+require('./handler/socketHandler.js')(io);
+// require('./handler/serialPortHandler.js')(io, DBconfig);
 
 
-
-// Http handler function
-function handler (req, res) {
-
-    // Using URL to parse the requested URL
-    var path = url.parse(req.url).pathname;
-
-    // Managing the root route
-    if (path == '/') {
-        index = fs.readFile(__dirname+'/public/index.html', 
-            function(error,data) {
-
-                if (error) {
-                    res.writeHead(500);
-                    return res.end("Error: unable to load index.html");
-                }
-
-                res.writeHead(200,{'Content-Type': 'text/html'});
-                res.end(data);
-            });
-    // Managing the route for the javascript files
-    } else if( /\.(js)$/.test(path) ) {
-        index = fs.readFile(__dirname+'/public'+path, 
-            function(error,data) {
-
-                if (error) {
-                    res.writeHead(500);
-                    return res.end("Error: unable to load " + path);
-                }
-
-                res.writeHead(200,{'Content-Type': 'text/plain'});
-                res.end(data);
-            });
-    } else {
-        res.writeHead(404);
-        res.end("Error: 404 - File not found.");
-    }
-
-}
-
-// Web Socket Connection
-io.sockets.on('connection', function (socket) {
-  setTimeout(function(){
-          socket.emit("example-pong");
-      }, delay*1000);
-  
-  
-});
-
-sp.on('data', function (data) {
-  data = data.toString().split("");
-  for (var i = 0; i < data.length; i++) {
-    io.sockets.emit('hit', data[i]);
-    console.log(data[i]);
-  }
-});
