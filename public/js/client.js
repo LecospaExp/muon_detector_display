@@ -1,8 +1,9 @@
 var socket = io('http://140.112.104.83:9487');
 
-var count = [76,43,11,100,40,11,50,23];
+var count = [76,43,110,100,40,55,50,23,90];
 
-var count_channel = new Chart('test', {
+var ctx = document.getElementById("count-channel");
+var count_channel = new Chart(ctx, {
 	type: 'bar',
     data: {
     	labels: ["1","2","3","4","5","6","7","8","9"],
@@ -18,7 +19,8 @@ var count_channel = new Chart('test', {
     	title: {
     		display: true,
     		text: "Count-Channel"
-    	}
+    	},
+    	responsive: false
 	}
 });
 
