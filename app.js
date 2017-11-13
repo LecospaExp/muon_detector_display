@@ -61,19 +61,10 @@ function handler (req, res) {
 
 // Web Socket Connection
 io.sockets.on('connection', function (socket) {
-
-  // If we recieved a command from a client to start watering lets do so
-  socket.on('example-ping', function(data) {
-      console.log("ping");
-
-      delay = data["duration"];
-
-      // Set a timer for when we should stop watering
-      setTimeout(function(){
+  setTimeout(function(){
           socket.emit("example-pong");
       }, delay*1000);
-
-  });
+  
   
 });
 

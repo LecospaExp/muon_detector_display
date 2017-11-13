@@ -1,28 +1,29 @@
 {
-  "name": "nodejs-websocket-example",
+  "name": "muon_detector_display",
   "version": "1.0.0",
-  "description": "Websocket example using Node.js from www.jaredwolff.com",
+  "description": "Web display for lecospa muon detector",
   "main": "app.js",
   "scripts": {
-    "default": "node app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaredwolff/nodejs-websocket-example.git"
+    "url": "git+https://github.com/lecospaexp/muon_detector_display.git"
   },
   "keywords": [
     "websocket",
     "node",
     "server"
   ],
-  "author": "Jared Wolff",
+  "author": "CYK, YHW",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jaredwolff/nodejs-websocket-example/issues"
+    "url": "https://github.com/lecospaexp/muon_detector_display/issues"
   },
-  "homepage": "https://github.com/jaredwolff/nodejs-websocket-example#readme",
-  "Dependencies": {
+  "homepage": "https://github.com/lecospaexp/muon_detector_display",
+  "dependencies": {
+    "chart.js": "^2.7.1",
     "socket.io": "^1.7.3",
     "serialport": "2.0.6"
   }
