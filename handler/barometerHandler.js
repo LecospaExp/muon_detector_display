@@ -19,9 +19,6 @@ module.exports = function(socket, config, database) {
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
 		}
-
-		// Log the values 
-		console.log(data);
 	});
 	BMP180.fetchInterval(function(err, data) {
 		if(err) {

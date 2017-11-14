@@ -9,7 +9,7 @@ module.exports = function(app, db){
 				if(err){
 					console.error('[DB]'+err);
 				}
-				console.log("channel:"+Channel+" Pressure:"+Pressure+" time:"+time);
+				console.log("channel:"+Channel+" Pressure:"+Pressure+" time:"+Time);
 			})
 		}
 	}
