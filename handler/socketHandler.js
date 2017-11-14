@@ -1,4 +1,4 @@
-module.exports = function (io) {
+module.exports = function (io, database) {
 	// Web Socket Connection
 	io.sockets.on('connection', function (client) {
 		console.log('[socket]connect:'+client.id);
