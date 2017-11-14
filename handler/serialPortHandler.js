@@ -1,5 +1,5 @@
 var serialport  = require("serialport").SerialPort;
-module.exports = function(socket, database, config){
+module.exports = function(socket, database, config, baro){
 	var sp = new serialport(config.port, {
 		baudRate: 115200,
 		dataBits: 8,

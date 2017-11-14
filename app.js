@@ -34,8 +34,8 @@ app.use('/', router);
 http.listen(9487)
 
 
-socket = require('./handler/socketHandler.js')(io);
-// require('./handler/serialPortHandler.js')(socket, db, SPconfig);
-require('./handler/barometerHandler.js')(socket, BAROconfig);
+var socket  = require('./handler/socketHandler.js')(io);
+var baro    = require('./handler/barometerHandler.js')(socket, BAROconfig);
+// require('./handler/serialPortHandler.js')(socket, db, SPconfig, baro);
 
 

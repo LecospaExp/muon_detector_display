@@ -5,9 +5,6 @@ module.exports = function(socket, config) {
 		address : 0X77
 	}, "barometer");
 	var curPressure = 0;
-	var Pa2Atm = function(pascal){
-		return 0.00000986923267*pascal
-	}
 	BMP180.fetch(function(err, data) {
 		if(err) {
 			console.error("An error occured!");
@@ -33,6 +30,10 @@ module.exports = function(socket, config) {
 			curPressure = Math.round((Pa2Atm(data.value)+curPressure*(config.smoothFactor-1))/config.smoothFactor,7)
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
+			addNewEvent(1, curPressure, 1510682601);
 		}
-	}, 5); // Fetch data every 5 seconds 
+	}, 10); // Fetch data every 5 seconds 
+	return {
+		getCurrentPressure: function(){return curPressure;}
+	}
 }
