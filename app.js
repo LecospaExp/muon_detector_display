@@ -8,7 +8,8 @@ var url         = require('url'),
     io          = require('socket.io')(http), 
     session     = require('express-session'),
     mongoose    = require('mongoose'),
-    DBconfig    = require('./config/db')
+    DBconfig    = require('./config/db'),
+    SPconfig    = require('./config/sp'),
     mongojs     = require('mongojs'),
     db          = mongojs(DBconfig.url, ['events'])
     i18n        = require('./lang/i18n'),
@@ -33,7 +34,7 @@ http.listen(9487)
 
 
 require('./handler/socketHandler.js')(io);
-require('./handler/serialPortHandler.js')(io, db);
+require('./handler/serialPortHandler.js')(io, db, SPconfig);
 require('./handler/barometerHandler.js')(io);
 
 
