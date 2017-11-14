@@ -1,5 +1,5 @@
 var serialport  = require("serialport").SerialPort;
-module.exports = function(io, database, config){
+module.exports = function(socket, database, config){
 	var sp = new serialport(config.port, {
 		baudRate: 115200,
 		dataBits: 8,
@@ -10,7 +10,7 @@ module.exports = function(io, database, config){
 	sp.on('data', function (data) {
 		data = data.toString().split("");
 		for (var i = 0; i < data.length; i++) {
-			io.sockets.emit('hit', data[i]);
+			socket.hitEvent(data[i]);
 			console.log(data[i]);
 		}
 	});

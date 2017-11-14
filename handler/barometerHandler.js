@@ -1,5 +1,5 @@
 var rpiSensors = require('raspi-sensors');
-module.exports = function(io) {
+module.exports = function(socket) {
 	var BMP180 = new rpiSensors.Sensor({
 		type    : "BMP180",
 		address : 0X70
@@ -20,7 +20,7 @@ module.exports = function(io) {
 		    console.error(err.cause);
 		    return;
 		}
-		io.emit('pressure', data);
+		socket.pressureEvent(data);
 
 		// Log the values 
 		console.log(data);
