@@ -1,4 +1,7 @@
 var rpiSensors = require('raspi-sensors');
+Math.myround = function(x, n){
+	return Math.round(x*Math.pow(10, n))/Math.pow(10, n);
+}
 module.exports = function(socket, config) {
 	var BMP180 = new rpiSensors.Sensor({
 		type    : "BMP180",
@@ -12,7 +15,7 @@ module.exports = function(socket, config) {
 			return;
 		}
 		if(data.type=='Pressure'){
-			curPressure = Math.round(Pa2Atm(data.value), 7)
+			curPressure = Math.myround(data.value/100, 2)
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
 		}
@@ -27,7 +30,7 @@ module.exports = function(socket, config) {
 		    return;
 		}
 		if(data.type=='Pressure'){
-			curPressure = Math.round((Pa2Atm(data.value)+curPressure*(config.smoothFactor-1))/config.smoothFactor,7)
+			curPressure = Math.myround((data.value/100+curPressure*(config.smoothFactor-1))/config.smoothFactor,2)
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
 			addNewEvent(1, curPressure, 1510682601);
