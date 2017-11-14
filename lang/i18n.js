@@ -10,7 +10,9 @@ i18n.configure({
 module.exports = function(req, res, next) {
 
     i18n.init(req, res);
-    res.local('__', res.__);
+    res.locals.__ = res.__ = function() {
+        return i18n.__.apply(req, arguments);
+    };
 
     var current_locale = i18n.getLocale();
 
