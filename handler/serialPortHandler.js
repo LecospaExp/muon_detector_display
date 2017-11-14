@@ -1,5 +1,5 @@
 var serialport  = require("serialport");
-module.exports = function(io){
+module.exports = function(io, data){
 	var sp = new serialport('/dev/ttyAMA0', {
 		baudRate: 115200,
 		dataBits: 8,
