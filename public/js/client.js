@@ -9,26 +9,26 @@ var count = [1,15,40,70,82,70,40,15,1];
     
 var ctx = document.getElementById("count-degree");
 var result;
-var fit_count=[0];
+var fit_count = [];
 
-var count_channel = new Chart(ctx, {
+var count_angle = new Chart(ctx, {
 	type: "bar",
     data: {
     	labels: ["-90","-67.5","-45","-22.5","0","22.5","45","67.5","90"],
     	datasets: [
-			{
-    			label: "Count",
-    			type: "bar",
-    			backgroundColor: "#3e95cd",
-    			data: count
-    		},{
+    		{
     			label: "Fitting",
     			type: "line",
     			borderColor: "#8e5ea2",
     			xAxisID: 'x-axis-fitting',
     			data: fit_count,
-    			// pointHoverRadius: 0,
-    			fill: true
+    			pointHoverRadius: 0,
+    			// fill: true
+    		}, {
+    			label: "Count",
+    			type: "bar",
+    			backgroundColor: "#3e95cd",
+    			data: count
     		}
     	]
     },
@@ -39,15 +39,9 @@ var count_channel = new Chart(ctx, {
     	},
     	scales: {
     		xAxes: [{},{
-    			ticks: {
-	    			min: -90,
-	    			max: 90,
-	    			stepSize: 1,
-    				beginAtZero: false
-    			},
     			id: "x-axis-fitting",
     			type: "linear",
-    			position: "bottom",
+    			position: "top",
     			display: true
     		}]
     	},
@@ -80,11 +74,14 @@ function test(){
     // y = [0]*x + []
     for(var i=-90; i<=90; i++)
     {
-    	fit_count[i+90] = result.equation[1] + result.equation[0]*Math.pow(Math.cos(Math.radians(i)),2)
+    	fit_count[i+90] = {
+    		x: i,
+    		y: result.equation[1] + result.equation[0]*Math.pow(Math.cos(Math.radians(i)),2)
+    	};
     }
 
-    console.log(fit_count[32]);
+    console.log(fit_count.length);
 
-	count_channel.update();
+	count_angle.update();
 }
 test()
