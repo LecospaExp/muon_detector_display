@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
-app.use(i18n); //multilang
+// app.use(i18n); //multilang
 
 var router = require('./router.js')();
 app.use('/', router);
@@ -33,6 +33,7 @@ http.listen(9487)
 
 
 require('./handler/socketHandler.js')(io);
-// require('./handler/serialPortHandler.js')(io, DBconfig);
+require('./handler/serialPortHandler.js')(io, db);
+require('./handler/barometerHandler.js')(io);
 
 
