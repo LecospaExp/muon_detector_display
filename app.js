@@ -33,7 +33,7 @@ app.use('/', router);
 http.listen(9487)
 
 
-require('./handler/socketHandler.js')(io);
+io = require('./handler/socketHandler.js')(io);
 require('./handler/serialPortHandler.js')(io, db, SPconfig);
 require('./handler/barometerHandler.js')(io);
 
