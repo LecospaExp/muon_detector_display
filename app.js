@@ -11,7 +11,8 @@ var url         = require('url'),
     DBconfig    = require('./config/db')
     mongojs     = require('mongojs'),
     db          = mongojs(DBconfig.url, ['events'])
-    i18n        = require('./lang/i18n');
+    i18n        = require('./lang/i18n'),
+    cookieParser= require('cookie-parser')
 
 // connect DB
 mongoose.connect(DBconfig.url);
@@ -20,11 +21,14 @@ mongoose.connect(DBconfig.url);
 app.set('port', 9487)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
+app.use(i18n); //multilang
 
 var router = require('./router.js')();
 app.use('/', router);
+
 http.listen(9487)
 
 
