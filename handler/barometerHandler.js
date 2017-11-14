@@ -2,7 +2,7 @@ var rpiSensors = require('raspi-sensors');
 Math.myround = function(x, n){
 	return Math.round(x*Math.pow(10, n))/Math.pow(10, n);
 }
-module.exports = function(socket, config) {
+module.exports = function(socket, config, database) {
 	var BMP180 = new rpiSensors.Sensor({
 		type    : "BMP180",
 		address : 0X77
@@ -33,7 +33,7 @@ module.exports = function(socket, config) {
 			curPressure = Math.myround((data.value/100+curPressure*(config.smoothFactor-1))/config.smoothFactor,2)
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
-			addNewEvent(1, curPressure, 1510682601);
+			database.addNewEvent(1, curPressure, 1510682601);
 		}
 	}, 10); // Fetch data every 5 seconds 
 	return {
