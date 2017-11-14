@@ -5,7 +5,7 @@ Math.radians = function(degrees) {
 };
 
 var ch2deg = [-90,-67.5,-45,-22.5,0,22.5,45,67.5,90];
-var count = [1,15,40,70,82,70,40,15,1];
+var count = [10,150,400,700,820,700,400,150,10];
     
 var ctx = document.getElementById("count-degree");
 var result;
@@ -34,14 +34,34 @@ var count_angle = new Chart(ctx, {
     options: {
     	title: {
     		display: true,
-    		text: "Count-Angle"
+    		text: "Count-Angle",
+    		fontSize: 50
     	},
     	scales: {
-    		xAxes: [{},{
+    		xAxes: [{
+    			scaleLabel:{
+	    			display: true,
+	    			labelString: "Degree",
+	    			fontSize: 30
+    			},
+    			ticks:{
+    				fontSize: 20
+    			}
+    		},{
     			id: "x-axis-fitting",
     			type: "linear",
-    			position: "top",
+    			position: "bottom",
     			display: false
+    		}],
+    		yAxes: [{
+    			scaleLabel:{
+    				display: true,
+    				labelString: "Count",
+    				fontSize: 30
+    			},
+    			ticks:{
+    				fontSize: 20
+    			}
     		}]
     	},
     	elements:{
@@ -72,8 +92,8 @@ function test(){
 								 [Math.pow(Math.cos(Math.radians(ch2deg[8])),2), count[8]],
 								]);
 	
-    console.log(result.equation[0]);
-    console.log(result.equation[1]);
+    // console.log(result.equation[0]);
+    // console.log(result.equation[1]);
 
     // y = [0]*x + []
     for(var i=-90; i<=90; i++)
@@ -83,8 +103,6 @@ function test(){
     		y: result.equation[1] + result.equation[0]*Math.pow(Math.cos(Math.radians(i)),2)
     	};
     }
-
-    console.log(fit_count.length);
 
 	count_angle.update();
 }
