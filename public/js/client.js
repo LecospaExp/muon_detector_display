@@ -22,8 +22,7 @@ var count_angle = new Chart(ctx, {
     			borderColor: "#8e5ea2",
     			xAxisID: 'x-axis-fitting',
     			data: fit_count,
-    			pointHoverRadius: 0,
-    			// fill: true
+    			fill: false
     		}, {
     			label: "Count",
     			type: "bar",
@@ -42,8 +41,13 @@ var count_angle = new Chart(ctx, {
     			id: "x-axis-fitting",
     			type: "linear",
     			position: "top",
-    			display: true
+    			display: false
     		}]
+    	},
+    	elements:{
+    		point:{
+    			radius: 0
+    		}
     	},
     	responsive: false
 	}
