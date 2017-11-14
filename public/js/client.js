@@ -1,7 +1,7 @@
 var socket = io('http://140.112.104.83:9487');
 
 var count = [76,43,110,100,40,55,50,23,90];
-
+    
 var ctx = document.getElementById("count-channel");
 var count_channel = new Chart(ctx, {
 	type: 'bar',
@@ -22,6 +22,9 @@ var count_channel = new Chart(ctx, {
     	},
     	responsive: false
 	}
+    var result = regression.linear([[1,2], [3, 4], [5, 6]]);
+    console.log(result.equation[0])
+    console.log(result.equation[1])
 });
 
 socket.on('hit', function(channel_number){
