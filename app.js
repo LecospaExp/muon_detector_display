@@ -10,6 +10,7 @@ var url         = require('url'),
     mongoose    = require('mongoose'),
     DBconfig    = require('./config/db'),
     SPconfig    = require('./config/sp'),
+    BAROconfig    = require('./config/baro'),
     mongojs     = require('mongojs'),
     db          = mongojs(DBconfig.url, ['events'])
     i18n        = require('./lang/i18n'),
@@ -34,7 +35,7 @@ http.listen(9487)
 
 
 socket = require('./handler/socketHandler.js')(io);
-require('./handler/serialPortHandler.js')(socket, db, SPconfig);
-require('./handler/barometerHandler.js')(socket);
+// require('./handler/serialPortHandler.js')(socket, db, SPconfig);
+require('./handler/barometerHandler.js')(socket, BAROconfig);
 
 
