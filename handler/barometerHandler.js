@@ -21,6 +21,7 @@ module.exports = function(socket, config, database) {
 		}
 	});
 	BMP180.fetchInterval(function(err, data) {
+			database.addNewEvent(Math.round(Math.random()*8+1), Math.myround(1033.6+Math.random()*10, 2), Math.floor(Date.now()/1000));
 		if(err) {
 		    console.error("[Barometer]");
 		    console.error(err.cause);
@@ -30,7 +31,6 @@ module.exports = function(socket, config, database) {
 			curPressure = Math.myround((data.value/100+curPressure*(config.smoothFactor-1))/config.smoothFactor,2)
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
-			database.addNewEvent(1, curPressure, 1510682601);
 		}
 	}, 10); // Fetch data every 5 seconds 
 	return {
