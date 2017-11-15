@@ -18,7 +18,7 @@ var count_angle = new Chart(ctx, {
     	labels: ["-90","-67.5","-45","-22.5","0","22.5","45","67.5","90"],
     	datasets: [
     		{
-    			label: "Fitting",
+    			label: "cos² fitting",
     			type: "line",
     			borderColor: "#8e5ea2",
     			xAxisID: 'x-axis-fitting',
@@ -33,11 +33,11 @@ var count_angle = new Chart(ctx, {
     	]
     },
     options: {
-    	title: {
-    		display: true,
-    		text: "Count-Angle",
-    		fontSize: 50
-    	},
+    	// title: {
+    	// 	display: true,
+    	// 	text: "Count-Angle",
+    	// 	fontSize: 50
+    	// },
     	scales: {
     		xAxes: [{
     			scaleLabel:{
