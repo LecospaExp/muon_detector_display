@@ -20,14 +20,14 @@ var count_angle = new Chart(ctx, {
     		{
     			label: "cos² fitting",
     			type: "line",
-    			borderColor: "#8e5ea2",
+    			borderColor: "#E98B2A",
     			xAxisID: 'x-axis-fitting',
     			data: fit_count,
     			fill: false
     		}, {
     			label: "Count",
     			type: "bar",
-    			backgroundColor: "#3e95cd",
+    			backgroundColor: "#F7D94C",
     			data: count
     		}
     	]
@@ -43,10 +43,17 @@ var count_angle = new Chart(ctx, {
     			scaleLabel:{
 	    			display: true,
 	    			labelString: "Degree",
-	    			fontSize: 30
+	    			fontColor: 	"#FFFFFF",
+	    			fontSize: 20,
+	    			position: "right"
     			},
     			ticks:{
+    				fontColor: "#FFFFFF",
     				fontSize: 20
+    			},
+    			gridLines:{
+    				display: false,
+    				color: "#FFFFFF"
     			}
     		},{
     			id: "x-axis-fitting",
@@ -58,11 +65,17 @@ var count_angle = new Chart(ctx, {
     			scaleLabel:{
     				display: true,
     				labelString: "Count",
-    				fontSize: 30
+    				fontColor: 	"#FFFFFF",
+    				fontSize: 20
     			},
     			ticks:{
+    				fontColor: "#FFFFFF",
     				fontSize: 20,
     				min: 0
+    			},
+    			gridLines:{
+    				display: true,
+    				color: "#FFFFFF"
     			}
     		}]
     	},
