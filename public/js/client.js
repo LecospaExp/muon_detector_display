@@ -8,7 +8,8 @@ var ch2deg = [-90,-67.5,-45,-22.5,0,22.5,45,67.5,90];
 var count = [10,150,400,700,820,700,400,150,10];
     
 var ctx = document.getElementById("count-degree");
-var result;
+var button = document.getElementById("reset");
+var result; // Fitting function.
 var fit_count = [];
 
 var count_angle = new Chart(ctx, {
@@ -60,7 +61,8 @@ var count_angle = new Chart(ctx, {
     				fontSize: 30
     			},
     			ticks:{
-    				fontSize: 20
+    				fontSize: 20,
+    				min: 0
     			}
     		}]
     	},
@@ -76,10 +78,10 @@ var count_angle = new Chart(ctx, {
 
 socket.on('hit', function(channel_number){
 	console.log(channel_number);
-	channel_count[channel_number-1] += 1;
+	count[channel_number-1] += 1;
 
-	
 });
+
 function test(){
 	result = regression.linear([ [Math.pow(Math.cos(Math.radians(ch2deg[0])),2), count[0]],
 								 [Math.pow(Math.cos(Math.radians(ch2deg[1])),2), count[1]],
@@ -90,12 +92,12 @@ function test(){
 								 [Math.pow(Math.cos(Math.radians(ch2deg[6])),2), count[6]],
 								 [Math.pow(Math.cos(Math.radians(ch2deg[7])),2), count[7]],
 								 [Math.pow(Math.cos(Math.radians(ch2deg[8])),2), count[8]],
-								]);
+							   ]);
 	
     // console.log(result.equation[0]);
     // console.log(result.equation[1]);
 
-    // y = [0]*x + []
+    // y = [0]*x + [1]
     for(var i=-90; i<=90; i++)
     {
     	fit_count[i+90] = {
@@ -106,7 +108,17 @@ function test(){
 
 	count_angle.update();
 }
-test()
+
+test();
+
+function reset() {
+	count = [0,0,0,0,0,0,0,0,0];
+	count_angle.data.datasets[1].data = count;
+	test();
+}
+
+button.onclick = function() {reset()};
+
 socket.on('pressure', function(value){
 	console.log("pressure: "+value);
 });
