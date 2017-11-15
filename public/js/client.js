@@ -107,3 +107,6 @@ function test(){
 	count_angle.update();
 }
 test()
+socket.on('pressure', function(value){
+	console.log("pressure: "+value);
+});
