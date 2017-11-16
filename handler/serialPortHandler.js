@@ -6,6 +6,8 @@ module.exports = function(socket, database, config, baro){
 		parity: 'none',
 		stopBits: 1,
 		flowControl: false
+	}, function(err){
+		console.log('hello')
 	});
 	sp.on('data', function (data) {
 		data = data.toString().split("");
