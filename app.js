@@ -38,6 +38,6 @@ http.listen(9487)
 
 var socket  = require('./handler/socketHandler.js')(io, database);
 var baro    = require('./handler/barometerHandler.js')(socket, BAROconfig, database);
-// require('./handler/serialPortHandler.js')(socket, db, SPconfig, baro);
+ require('./handler/serialPortHandler.js')(socket, db, SPconfig, baro);
 
 

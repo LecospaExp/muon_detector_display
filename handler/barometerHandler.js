@@ -30,7 +30,6 @@ module.exports = function(socket, config, database) {
 			curPressure = Math.myround((data.value/100+curPressure*(config.smoothFactor-1))/config.smoothFactor,2)
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
-			database.addNewEvent(1, curPressure, 1510682601);
 		}
 	}, 10); // Fetch data every 5 seconds 
 	return {
