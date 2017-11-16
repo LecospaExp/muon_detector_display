@@ -20,9 +20,10 @@ var count_angle = new Chart(ctx, {
     		{
     			label: "cos² fitting",
     			type: "line",
-    			borderColor: "#E98B2A",
     			xAxisID: 'x-axis-fitting',
     			data: fit_count,
+    			borderColor: "#E98B2A",
+    			fontColor: "#FFFFFF",
     			fill: false
     		}, {
     			label: "Count",
@@ -82,6 +83,12 @@ var count_angle = new Chart(ctx, {
     	elements:{
     		point:{
     			radius: 0
+    		}
+    	},
+    	legend:{
+    		labels:{
+    			fontColor: "#FFFFFF",
+    			fontSize: 14
     		}
     	},
     	responsive: false
