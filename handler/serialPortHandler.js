@@ -19,7 +19,6 @@ module.exports = function(socket, database, config, baro){
 	sp.on('error', function(e){
 	  	console.error(e);
 	})
-
 }
 
 	

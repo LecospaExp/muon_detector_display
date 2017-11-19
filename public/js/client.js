@@ -4,7 +4,8 @@ Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
 };
 
-var ch2deg = [-90,-67.5,-45,-22.5,0,22.5,45,67.5,90];
+var ch2deg = [-80,-60,-40,-20,0,20,40,60,80];
+
 var count = [0,0,0,0,0,0,0,0,0];
     
 var ctx = document.getElementById("count-degree");
@@ -17,7 +18,7 @@ var canvas = document.getElementById('hit-pattern');
 var count_angle = new Chart(ctx, {
 	type: "bar",
     data: {
-    	labels: ["-90","-67.5","-45","-22.5","0","22.5","45","67.5","90"],
+    	labels: ["-80","-60","-40","-20","0","20","40","60","80"],
     	datasets: [
     		{
     			label: "cos² fitting",
@@ -25,7 +26,7 @@ var count_angle = new Chart(ctx, {
     			xAxisID: 'x-axis-fitting',
     			data: fit_count,
     			borderColor: "#E98B2A",
-    			fontColor: "#FFFFFF",
+    			fontColor: "#000000",
     			fill: false
     		}, {
     			label: "Count",
@@ -46,17 +47,17 @@ var count_angle = new Chart(ctx, {
     			scaleLabel:{
 	    			display: true,
 	    			labelString: "Degree",
-	    			fontColor: 	"#FFFFFF",
+	    			fontColor: 	"#000000",
 	    			fontSize: 20,
 	    			position: "right"
     			},
     			ticks:{
-    				fontColor: "#FFFFFF",
+    				fontColor: "#000000",
     				fontSize: 20
     			},
     			gridLines:{
     				display: false,
-    				color: "#FFFFFF"
+    				color: "#000000"
     			}
     		},{
     			id: "x-axis-fitting",
@@ -68,17 +69,17 @@ var count_angle = new Chart(ctx, {
     			scaleLabel:{
     				display: true,
     				labelString: "Count",
-    				fontColor: 	"#FFFFFF",
+    				fontColor: 	"#000000",
     				fontSize: 20
     			},
     			ticks:{
-    				fontColor: "#FFFFFF",
+    				fontColor: "#000000",
     				fontSize: 20,
     				min: 0
     			},
     			gridLines:{
     				display: true,
-    				color: "#FFFFFF"
+    				color: "#000000"
     			}
     		}]
     	},
@@ -89,7 +90,7 @@ var count_angle = new Chart(ctx, {
     	},
     	legend:{
     		labels:{
-    			fontColor: "#FFFFFF",
+    			fontColor: "#000000",
     			fontSize: 14
     		}
     	},
@@ -103,6 +104,7 @@ socket.on('hit', function(channel_number){
 	count[channel_number-1] += 1;
     count_angle.data.datasets[1].data = count;
     fitting()
+    DrawHitPattern(channel_number)
 });
 
 function fitting(){
@@ -138,6 +140,7 @@ function reset() {
 	count = [0,0,0,0,0,0,0,0,0];
 	count_angle.data.datasets[1].data = count;
 	test();
+
 }
 
 // button.onclick = function() {reset()};
@@ -223,4 +226,3 @@ function DrawHitPattern(channel){
 
 }
 DrawDefaultPattern()
-DrawHitPattern(4)
