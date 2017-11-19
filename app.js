@@ -31,13 +31,13 @@ app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
 var router = require('./router.js')();
 app.use('/', router);
 
-var database = require('./database/dbHandler')(app, db)
+
 
 http.listen(9487)
 
-
+var database = require('./database/dbHandler')(app, db)
 var socket  = require('./handler/socketHandler.js')(io, database);
 var baro    = require('./handler/barometerHandler.js')(socket, BAROconfig, database);
-require('./handler/serialPortHandler.js')(socket, db, SPconfig, baro);
+// require('./handler/serialPortHandler.js')(socket, db, SPconfig, baro);
 
 

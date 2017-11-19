@@ -5,12 +5,14 @@ Math.radians = function(degrees) {
 };
 
 var ch2deg = [-90,-67.5,-45,-22.5,0,22.5,45,67.5,90];
-var count = [10,150,400,700,820,700,400,150,10];
+var count = [0,0,0,0,0,0,0,0,0];
     
 var ctx = document.getElementById("count-degree");
 var button = document.getElementById("reset");
 var result; // Fitting function.
 var fit_count = [];
+
+var canvas = document.getElementById('hit-pattern');
 
 var count_angle = new Chart(ctx, {
 	type: "bar",
@@ -99,11 +101,13 @@ var count_angle = new Chart(ctx, {
 socket.on('hit', function(channel_number){
 	console.log(channel_number);
 	count[channel_number-1] += 1;
-
+    count_angle.data.datasets[1].data = count;
+    fitting()
 });
 
-function test(){
-	result = regression.linear([ [Math.pow(Math.cos(Math.radians(ch2deg[0])),2), count[0]],
+function fitting(){
+	
+    result = regression.linear([ [Math.pow(Math.cos(Math.radians(ch2deg[0])),2), count[0]],
 								 [Math.pow(Math.cos(Math.radians(ch2deg[1])),2), count[1]],
 								 [Math.pow(Math.cos(Math.radians(ch2deg[2])),2), count[2]],
 								 [Math.pow(Math.cos(Math.radians(ch2deg[3])),2), count[3]],
@@ -129,7 +133,6 @@ function test(){
 	count_angle.update();
 }
 
-test();
 
 function reset() {
 	count = [0,0,0,0,0,0,0,0,0];
@@ -137,8 +140,87 @@ function reset() {
 	test();
 }
 
-button.onclick = function() {reset()};
+// button.onclick = function() {reset()};
 
 socket.on('pressure', function(value){
 	console.log("pressure: "+value);
 });
+
+
+function DrawHitPattern(){
+    
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+        ctx.canvas.width = 450;
+        ctx.canvas.height = 250;
+        ctx.translate(225, 220)
+        for (var i = 0; i < 9; i++) {
+            ctx.beginPath();
+            ctx.lineTo(150,0);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.strokeRect(150, -25, 50, 55);
+            ctx.rotate(-Math.PI*22.5/180);
+        }    
+        ctx.beginPath();
+        ctx.arc(0,0,25,0,Math.PI*2); 
+        ctx.stroke();
+    }
+
+}
+function DrawDefaultPattern(){
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+        ctx.canvas.width = 450;
+        ctx.canvas.height = 250;
+        ctx.translate(225, 220)
+        for (var i = 0; i < 9; i++) {
+            ctx.beginPath();
+            ctx.lineTo(150,0);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.strokeRect(150, -25, 50, 55);
+            ctx.rotate(-Math.PI*22.5/180);
+        }    
+        ctx.beginPath();
+        ctx.arc(0,0,25,0,Math.PI*2); 
+        ctx.stroke();
+        ctx.save();
+    }
+
+}
+function DrawHitPattern(channel){
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+        ctx.canvas.width = 450;
+        ctx.canvas.height = 250;
+        ctx.translate(225, 220)
+        ctx.fillStyle = "rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+",0,0.5)";
+        for (var i = 0; i < 9; i++) {
+            if(i==channel-1){
+                ctx.beginPath();
+                ctx.moveTo(250, (Math.random()-0.5)*50);
+                ctx.lineTo(-250, (Math.random()-0.5)*48);
+                ctx.stroke();
+            }
+            ctx.beginPath();
+            if(i == channel-1){
+                ctx.fillRect(150, -25, 50, 55);
+            }
+            ctx.strokeRect(150, -25, 50, 55);
+            ctx.rotate(-Math.PI*22.5/180);
+        }    
+        ctx.beginPath();
+        ctx.arc(0,0,25,0,Math.PI*2); 
+        ctx.stroke();
+        ctx.fill();
+
+
+
+    }
+
+}
+DrawDefaultPattern()
+DrawHitPattern(4)

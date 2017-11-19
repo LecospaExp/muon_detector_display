@@ -1,31 +1,155 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<%- include layout/header %>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>Muon Detector|LeCosPA</title>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
+        <!-- Custom styles for this template -->
+        <link href="/css/sticky-footer-navbar.css" rel="stylesheet">
+        <style type="text/css">
+        	.card {
+        		margin-top: 1.5rem
+        	}
+        	.data-text{
+        		font-size: x-large;
+        		font-weight: 250;
+        		text-align: right;
+        	}
+        	.data-title{
+        		font-size: large;
+        	}
+        	.card-text{
+        		text-align: right;
+        	}
+        	.canvas-container{
+        		text-align: center;
+        	}
+
+        </style>
+  </head>
+  <body class="">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand" href="#">Muon Detector</a>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Experiment <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Contributors</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+    </nav>
+
+
+    <!-- Begin page content -->
+	<div class="mt-3">
+	<!-- <h1>Sticky footer with fixed navbar</h1> -->
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card" style="">
+					<div class="card-body">
+						<h4 class="card-title">Hit distribution</h4>
+						<p class="card-text">bla bla bla</p>
+					</div>
+					<div class="card-body">
+						<canvas id="count-degree" style="width:100%;height: 55vh"></canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="card" style="">
+							<div class="card-body">
+								<h4 class="card-title data-title">Hit rate</h4>
+								<p class="card-text"><span class=" data-text" id="pressure">2.34</span>&nbsp;Hz</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="card" style="">
+							<div class="card-body">
+								<h4 class="card-title data-title">Air pressure</h4>
+								<p class="card-text"><span class=" data-text" id="pressure">1033.6</span>&nbsp;hPa</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="card" style="">
+							<div class="card-body">
+								<h4 class="card-title data-title">Total hit</h4>
+								<p class="card-text"><span class=" data-text" id="pressure">234</span>&nbsp;</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="card" style="">
+							<div class="card-body">
+								<h4 class="card-title data-title">Total time</h4>
+								<p class="card-text"><span class=" data-text" id="pressure">123</span>&nbsp;s</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card" style="">
+					<div class="card-body">
+						<h4 class="card-title">Hit pattern</h4>
+						<p class="card-text">bla bla bla</p>
+					</div>
+					<div class="card-body">
+						<div class="canvas-container">
+							<canvas id="hit-pattern" style=""></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+
+
+
+
+
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 	<script src="/js/Chart.js"></script>
 	<script src="/js/regression.js"></script> 
-</head>
-<body>
-	<div id="layout">
-    <!-- Menu toggle -->
-		<%- include layout/sidebar %>
-	    <div id="main" style="background-color: #1C1C1C;">
-	        <div class="header">
-            <h1 style="color: #ffffff;">Real-time hit distribution</h1>
-	        </div>
-            <div class="pure-g">
-                <div class="pure-u-18-24">
-                	<canvas id="count-degree" style="width:100%;height: 450px"></canvas>
-                	<button id="reset" class="pure-button">Reset</button>
-                </div>
-                <div class="pure-u-6-24">
-            		<h2 class="content-subhead">Hello world</h2>    
-                </div>
-            </div>
+	<script src="/js/client.js"></script>   
 
-	    </div>
-	</div>
-  
 </body>
-<script src="/js/client.js"></script> 
 </html>
