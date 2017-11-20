@@ -98,6 +98,13 @@ var count_angle = new Chart(ctx, {
 	}
     
 });
+socket.on('curCount', function(countCh){
+    console.log(countCh);
+    count = countCh;
+    count_angle.data.datasets[1].data = count;
+    fitting()
+    DrawHitPattern(channel_number)
+});
 
 socket.on('hit', function(channel_number){
 	console.log(channel_number);
@@ -147,45 +154,26 @@ function reset() {
 
 socket.on('pressure', function(value){
 	console.log("pressure: "+value);
+    $('#pressure').html(value);
 });
 
+var radiusBlock = 160
 
-function DrawHitPattern(){
-    
-    if (canvas.getContext) {
-        var ctx = canvas.getContext('2d');
-        ctx.canvas.width = 450;
-        ctx.canvas.height = 250;
-        ctx.translate(225, 220)
-        for (var i = 0; i < 9; i++) {
-            ctx.beginPath();
-            ctx.lineTo(150,0);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeRect(150, -25, 50, 55);
-            ctx.rotate(-Math.PI*22.5/180);
-        }    
-        ctx.beginPath();
-        ctx.arc(0,0,25,0,Math.PI*2); 
-        ctx.stroke();
-    }
-
-}
 function DrawDefaultPattern(){
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
         ctx.canvas.width = 450;
         ctx.canvas.height = 250;
         ctx.translate(225, 220)
+        ctx.rotate(-Math.PI*10/180);
         for (var i = 0; i < 9; i++) {
             ctx.beginPath();
-            ctx.lineTo(150,0);
+            ctx.lineTo(radiusBlock,0);
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.strokeRect(150, -25, 50, 55);
-            ctx.rotate(-Math.PI*22.5/180);
+            ctx.strokeRect(radiusBlock, -25, 50, 55);
+            ctx.rotate(-Math.PI*20/180);
         }    
         ctx.beginPath();
         ctx.arc(0,0,25,0,Math.PI*2); 
@@ -194,32 +182,43 @@ function DrawDefaultPattern(){
     }
 
 }
+var canvasReset = function(){}
 function DrawHitPattern(channel){
     if (canvas.getContext) {
+        canvasReset = function(){}
         var ctx = canvas.getContext('2d');
         ctx.canvas.width = 450;
         ctx.canvas.height = 250;
         ctx.translate(225, 220)
         ctx.fillStyle = "rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+",0,0.5)";
+        ctx.rotate(-Math.PI*10/180);
         for (var i = 0; i < 9; i++) {
-            if(i==channel-1){
+            if(i==9-channel){
                 ctx.beginPath();
+                ctx.lineWidth = 3
                 ctx.moveTo(250, (Math.random()-0.5)*50);
                 ctx.lineTo(-250, (Math.random()-0.5)*48);
                 ctx.stroke();
             }
+            ctx.lineWidth = 1
             ctx.beginPath();
-            if(i == channel-1){
-                ctx.fillRect(150, -25, 50, 55);
+            if(i == 9-channel){
+                ctx.fillRect(radiusBlock, -25, 50, 55);
             }
-            ctx.strokeRect(150, -25, 50, 55);
-            ctx.rotate(-Math.PI*22.5/180);
+            ctx.strokeRect(radiusBlock, -25, 50, 55);
+            ctx.rotate(-Math.PI*20/180);
         }    
         ctx.beginPath();
         ctx.arc(0,0,25,0,Math.PI*2); 
         ctx.stroke();
         ctx.fill();
+        canvas.reset = function(){
+            DrawDefaultPattern();
+        }
 
+        setTimeout(canvasReset = function(){
+            DrawDefaultPattern()
+        }, 2000);
 
 
     }

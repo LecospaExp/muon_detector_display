@@ -14,7 +14,9 @@ var url         = require('url'),
     mongojs     = require('mongojs'),
     db          = mongojs(DBconfig.url, ['events'])
     i18n        = require('./lang/i18n'),
-    cookieParser= require('cookie-parser')
+    cookieParser= require('cookie-parser'),
+    sharedsession = require("express-socket.io-session");
+
 
 // connect DB
 mongoose.connect(DBconfig.url);
@@ -27,6 +29,9 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
 // app.use(i18n); //multilang
+
+io.use(sharedsession(session, cookieParser()));
+
 
 var router = require('./router.js')();
 app.use('/', router);
