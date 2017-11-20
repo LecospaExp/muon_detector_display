@@ -7,7 +7,7 @@ Math.radians = function(degrees) {
 var ch2deg = [-80,-60,-40,-20,0,20,40,60,80];
 
 var count = [0,0,0,0,0,0,0,0,0];
-    
+var totalHit = 0;
 var ctx = document.getElementById("count-degree");
 var button = document.getElementById("reset");
 var result; // Fitting function.
@@ -112,6 +112,8 @@ socket.on('hit', function(channel_number){
     count_angle.data.datasets[1].data = count;
     fitting()
     DrawHitPattern(channel_number)
+    totalHit+=1;
+    $('#totalHit').html(totalHit);
 });
 
 function fitting(){

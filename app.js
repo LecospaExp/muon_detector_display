@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
 // app.use(i18n); //multilang
 
-io.use(sharedsession(session, cookieParser()));
+// io.use(sharedsession(session, cookieParser()));
 
 
 var router = require('./router.js')();
