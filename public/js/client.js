@@ -1,5 +1,5 @@
 var socket = io('http://140.112.104.83:9487');
-
+var bgCounter = io('http://140.112.104.83:9487/bgCounter');
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
 };
@@ -227,3 +227,12 @@ function DrawHitPattern(channel){
 
 }
 DrawDefaultPattern()
+
+
+bgCounter.on('totalCount', function(totalCount){
+    count_angle.data.datasets[1].data = count = totalCount;
+    fitting()
+    DrawHitPattern(channel_number)
+    var stotalHit = count.reduce((a, b) => a + b, 0)
+    $('#totalHit').html(totalHit);
+})

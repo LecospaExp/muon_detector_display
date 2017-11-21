@@ -35,6 +35,7 @@
     "raspi-sensors": "^0.2.11",
     "serialport": "2.0.6",
     "socket.io": "^1.7.3",
-    "supervisor": "^0.12.0"
+    "supervisor": "^0.12.0",
+    "time": "^0.12.0"
   }
 }

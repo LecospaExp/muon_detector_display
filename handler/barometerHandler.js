@@ -1,4 +1,5 @@
 var rpiSensors = require('raspi-sensors');
+var time = require('time');
 Math.myround = function(x, n){
 	return Math.round(x*Math.pow(10, n))/Math.pow(10, n);
 }
@@ -21,7 +22,6 @@ module.exports = function(socket, config, database) {
 		}
 	});
 	BMP180.fetchInterval(function(err, data) {
-			database.addNewEvent(Math.round(Math.random()*8+1), Math.myround(1033.6+Math.random()*10, 2), Math.floor(Date.now()/1000));
 		if(err) {
 		    console.error("[Barometer]");
 		    console.error(err.cause);
@@ -32,7 +32,7 @@ module.exports = function(socket, config, database) {
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
 		}
-	}, 10); // Fetch data every 5 seconds 
+	}, 2); // Fetch data every 5 seconds 
 	return {
 		getCurrentPressure: function(){return curPressure;}
 	}
