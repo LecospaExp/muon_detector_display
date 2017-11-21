@@ -14,7 +14,7 @@ module.exports = function(socket, database, config, baro){
 		data = data.toString().split("");
 		for (var i = 0; i < data.length; i++) {
 			socket.hitEvent(data[i]);
-			addNewEvent(data[i], baro.getCurrentPressure(), time.time(), function(){})
+			database.addNewEvent(data[i], baro.getCurrentPressure(), time.time())
 			console.log(data[i]);
 		}
 	});

@@ -3,7 +3,7 @@ var Event = require('./event.js');
 module.exports = function(app, db){
 
 	return {
-		addNewEvent:function(Channel, Pressure, hitTime, callback){
+		'addNewEvent':function(Channel, Pressure, hitTime){
 			db.events.insert({time: hitTime, channel: Channel, pressure: Pressure}, function(err, res){
 				if(err){
 					console.error('[DB]'+err);
@@ -11,7 +11,7 @@ module.exports = function(app, db){
 				console.log("channel:"+Channel+" Pressure:"+Pressure+" time:"+hitTime);
 			})
 		}, 
-		getLastEvtTime:function(){
+		'getLastEvtTime':function(){
 			var result = db.events.findOne({$query:{},$orderby:{_id:-1}})	
 			if(result){
 				return result.time
@@ -19,7 +19,7 @@ module.exports = function(app, db){
 				return null
 			}
 		},
-		getEvtFromTime:function(strTime, callback){
+		'getEvtFromTime':function(strTime, callback){
 			console.log(strTime)
 			db.events.aggregate({
 					$match:{"time":{$gt:strTime}}
