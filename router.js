@@ -17,6 +17,10 @@ module.exports = function(){
 		res.render('index');
 		// console.log(res.getLocale())
 	});
+	router.get('/contributors', function(req, res){
+		res.render('contributors');
+		// console.log(res.getLocale())
+	});
 
 	return router
 }
