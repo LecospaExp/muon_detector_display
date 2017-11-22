@@ -162,8 +162,10 @@ function fitting(){
 function reset() {
 	count = [0,0,0,0,0,0,0,0,0];
 	count_angle.data.datasets[1].data = count;
-	test();
-
+	fitting();
+    socket.emit('reset')
+    totalHit = 0
+    strTime = Math.round(Date.now()/1000)
 }
 
 // button.onclick = function() {reset()};

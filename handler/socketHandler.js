@@ -16,11 +16,18 @@ module.exports = function (io, database) {
 					}
 				}
 				io.sockets.emit('CurCount', totalCount);
-				console.log(totalCount)
+				console.log("[socket]totalCount:"+totalCount)
 			})
 		}
 		io.sockets.emit('strTime', client.handshake.session.startEvtTime);
+		io.sockets.on('Reset', function(){
+			client.handshake.session.startEvtTime = time.time()
+			client.handshake.session.save()
+			io.sockets.emit('strTime', client.handshake.session.startEvtTime);
+			console.log('[socket]Reset:'+client.handshake.session.startEvtTime)
+		})
 	});
+
 
 	return {
 		'hitEvent':function(channel){
