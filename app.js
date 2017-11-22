@@ -26,7 +26,10 @@ session = session({
 		secret: 'taiwannumberone', 
 		key: 'lecospa',
 		resave: true,  
-		saveUninitialized: true 
+		saveUninitialized: true,
+        cookie:{
+            maxAge:60*60*24*30 //1 month
+        }
 	})
 
 // express setup
