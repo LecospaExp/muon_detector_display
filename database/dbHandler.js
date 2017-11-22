@@ -8,7 +8,7 @@ module.exports = function(app, db){
 				if(err){
 					console.error('[DB]'+err);
 				}
-				console.log("channel:"+Channel+" Pressure:"+Pressure+" time:"+hitTime);
+				// console.log("channel:"+Channel+" Pressure:"+Pressure+" time:"+hitTime);
 			})
 		}, 
 		'getLastEvtTime':function(){

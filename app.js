@@ -30,7 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
 // app.use(i18n); //multilang
 
-io.of('/bgCounter').use(sharedsession(session, cookieParser()));
+io.use(sharedsession(session, cookieParser()));
+// io.of('/bgCounter').use(sharedsession(session, cookieParser()));
 var router = require('./router.js')();
 app.use('/', router);
 
@@ -41,6 +42,6 @@ http.listen(9487)
 var database = require('./database/dbHandler')(app, db)
 var socket  = require('./handler/socketHandler.js')(io, database);
 var baro    = require('./handler/barometerHandler.js')(socket, BAROconfig, database);
-//require('./handler/serialPortHandler.js')(socket, db, SPconfig, baro);
+//require('./handler/serialPortHandler.js')(socket, database, SPconfig, baro);
 
 
