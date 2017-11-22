@@ -1,5 +1,6 @@
 var socket = io('http://140.112.104.83:9487');
 var bgCounter = io('http://140.112.104.83:9487/bgCounter');
+
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
 };
@@ -11,6 +12,9 @@ var ch2deg = [-80,-60,-40,-20,0,20,40,60,80];
 var strTime = Math.round(Date.now()/1000)
 var count = [0,0,0,0,0,0,0,0,0];
 var totalHit = 0;
+var ch_max = count.reduce(function(a,b){
+    return Math.max(a,b);
+});
 var ctx = document.getElementById("count-degree");
 var button = document.getElementById("reset");
 var result; // Fitting function.
@@ -76,10 +80,15 @@ var count_angle = new Chart(ctx, {
     				fontSize: 20
     			},
     			ticks:{
+                    userCallback: function(label, index, labels) {
+                        if (Math.floor(label) === label) {
+                            return label;
+                        }
+                    },
     				fontColor: "#000000",
     				fontSize: 20,
-    				min: 0
-    			},
+    				min: 0,
+                },
     			gridLines:{
     				display: true,
     				color: "#000000"
