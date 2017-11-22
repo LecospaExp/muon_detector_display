@@ -27,7 +27,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'taiwannumberone', key: 'lecospa'}));
+session = session({ 
+		secret: 'taiwannumberone', 
+		key: 'lecospa',
+		resave: false,  
+		saveUninitialized: true 
+	})
+app.use(session)
 // app.use(i18n); //multilang
 
 io.use(sharedsession(session, cookieParser()));
@@ -42,6 +48,6 @@ http.listen(9487)
 var database = require('./database/dbHandler')(app, db)
 var socket  = require('./handler/socketHandler.js')(io, database);
 var baro    = require('./handler/barometerHandler.js')(socket, BAROconfig, database);
-//require('./handler/serialPortHandler.js')(socket, database, SPconfig, baro);
+require('./handler/serialPortHandler.js')(socket, database, SPconfig, baro);
 
 
