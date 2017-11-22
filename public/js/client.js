@@ -3,9 +3,12 @@ var bgCounter = io('http://140.112.104.83:9487/bgCounter');
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
 };
-
+Math.myround = function(x, n){
+    return Math.round(x*Math.pow(10, n))/Math.pow(10, n)
+}
 var ch2deg = [-80,-60,-40,-20,0,20,40,60,80];
 
+var strTime = Math.round(Date.now()/1000)
 var count = [0,0,0,0,0,0,0,0,0];
 var totalHit = 0;
 var ctx = document.getElementById("count-degree");
@@ -99,22 +102,33 @@ var count_angle = new Chart(ctx, {
     
 });
 socket.on('curCount', function(countCh){
-    console.log(countCh);
+    console.log("curCount:"+countCh);
     count = countCh;
     count_angle.data.datasets[1].data = count;
     fitting()
-    DrawHitPattern(channel_number)
+    totalHit = count.reduce((a, b) => a + b, 0);
+    $('#totalHit').html(totalHit);
 });
 
+socket.on('strTime', function(serverSideStrTime){
+    console.log("strTime:"+serverSideStrTime);
+    strTime = serverSideStrTime
+    $('#totalTime').html(Math.round(Date.now()/1000) - strTime);
+});
 socket.on('hit', function(channel_number){
-	console.log(channel_number);
 	count[channel_number-1] += 1;
     count_angle.data.datasets[1].data = count;
     fitting()
-    DrawHitPattern(channel_number)
-    totalHit+=1;
+    DrawHitPattern(channel_number);
+    totalHit += 1
     $('#totalHit').html(totalHit);
 });
+
+function timer(){
+    $('#totalTime').html(Math.round(Date.now()/1000) - strTime); 
+    $('#hitRate').html(Math.myround(totalHit/(Date.now()/1000 - strTime), 3))
+    setTimeout(timer, 1000)
+}
 
 function fitting(){
 	
@@ -155,7 +169,7 @@ function reset() {
 // button.onclick = function() {reset()};
 
 socket.on('pressure', function(value){
-	console.log("pressure: "+value);
+	console.log("[pressure] "+value);
     $('#pressure').html(value);
 });
 
@@ -229,10 +243,3 @@ function DrawHitPattern(channel){
 DrawDefaultPattern()
 
 
-bgCounter.on('totalCount', function(totalCount){
-    count_angle.data.datasets[1].data = count = totalCount;
-    fitting()
-    DrawHitPattern(channel_number)
-    var stotalHit = count.reduce((a, b) => a + b, 0)
-    $('#totalHit').html(totalHit);
-})
