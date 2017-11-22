@@ -101,7 +101,7 @@ var count_angle = new Chart(ctx, {
 	}
     
 });
-socket.on('curCount', function(countCh){
+socket.on('CurCount', function(countCh){
     console.log("curCount:"+countCh);
     count = countCh;
     count_angle.data.datasets[1].data = count;
