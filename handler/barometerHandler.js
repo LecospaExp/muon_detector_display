@@ -32,7 +32,7 @@ module.exports = function(socket, config, database) {
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
 		}
-	}, 2); // Fetch data every 5 seconds 
+	}, 5); // Fetch data every 5 seconds 
 	return {
 		getCurrentPressure: function(){return curPressure;}
 	}

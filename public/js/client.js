@@ -174,7 +174,11 @@ function reset() {
 	fitting();
     socket.emit('reset')
     totalHit = 0
+	$('#totalHit').html(totalHit)
+	$('#totalTime').html(0)
+	$('#hitRate').html(0)
     strTime = Math.round(Date.now()/1000)
+	console.log('reset')
 }
 
 // button.onclick = function() {reset()};

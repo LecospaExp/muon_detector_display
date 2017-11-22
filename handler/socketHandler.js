@@ -2,6 +2,12 @@ var time = require('time');
 module.exports = function (io, database) {
 	io.sockets.on('connection', function (client) {
 		console.log('[socket]connect:'+client.id);
+		client.on('reset', function(){
+			client.handshake.session.startEvtTime = time.time()
+			client.handshake.session.save()
+			io.sockets.emit('strTime', client.handshake.session.startEvtTime);
+			console.log('[socket]Reset:'+client.handshake.session.startEvtTime)
+		})		
 		if(!client.handshake.session.startEvtTime){
 			client.handshake.session.startEvtTime = time.time()
 			client.handshake.session.save()
@@ -20,12 +26,7 @@ module.exports = function (io, database) {
 			})
 		}
 		io.sockets.emit('strTime', client.handshake.session.startEvtTime);
-		io.sockets.on('reset', function(){
-			client.handshake.session.startEvtTime = time.time()
-			client.handshake.session.save()
-			io.sockets.emit('strTime', client.handshake.session.startEvtTime);
-			console.log('[socket]Reset:'+client.handshake.session.startEvtTime)
-		})
+		
 	});
 
 
