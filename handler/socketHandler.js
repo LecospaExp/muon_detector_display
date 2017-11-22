@@ -20,7 +20,7 @@ module.exports = function (io, database) {
 			})
 		}
 		io.sockets.emit('strTime', client.handshake.session.startEvtTime);
-		io.sockets.on('Reset', function(){
+		io.sockets.on('reset', function(){
 			client.handshake.session.startEvtTime = time.time()
 			client.handshake.session.save()
 			io.sockets.emit('strTime', client.handshake.session.startEvtTime);
