@@ -5,7 +5,7 @@ module.exports = function (io, database) {
 		client.on('reset', function(){
 			client.handshake.session.startEvtTime = time.time()
 			client.handshake.session.save()
-			io.sockets.emit('strTime', client.handshake.session.startEvtTime);
+			client.emit('strTime', client.handshake.session.startEvtTime);
 			console.log('[socket]Reset:'+client.handshake.session.startEvtTime)
 		})		
 		if(!client.handshake.session.startEvtTime){
@@ -21,11 +21,11 @@ module.exports = function (io, database) {
 						totalCount[res[i]._id-1] = res[i].sum
 					}
 				}
-				io.sockets.emit('CurCount', totalCount);
+				client.emit('CurCount', totalCount);
 				console.log("[socket]totalCount:"+totalCount)
 			})
 		}
-		io.sockets.emit('strTime', client.handshake.session.startEvtTime);
+		client.emit('strTime', client.handshake.session.startEvtTime);
 		
 	});
 
