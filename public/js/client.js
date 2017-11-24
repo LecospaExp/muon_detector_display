@@ -15,6 +15,10 @@ var totalHit = 0;
 var ch_max = count.reduce(function(a,b){
     return Math.max(a,b);
 });
+
+
+
+
 var ctx = document.getElementById("count-degree");
 var button = document.getElementById("reset");
 var result; // Fitting function.
@@ -49,6 +53,7 @@ var count_angle = new Chart(ctx, {
     	// 	text: "Count-Angle",
     	// 	fontSize: 50
     	// },
+        maintainAspectRatio: false,
     	scales: {
     		xAxes: [{
     			scaleLabel:{
@@ -106,7 +111,7 @@ var count_angle = new Chart(ctx, {
     			fontSize: 14
     		}
     	},
-    	responsive: false
+    	responsive: true
 	}
     
 });
@@ -166,7 +171,9 @@ function fitting(){
 
 	count_angle.update();
 }
-
+function resizeHist(){
+    count_angle.update();
+}
 
 function reset() {
 	count = [0,0,0,0,0,0,0,0,0];
@@ -188,14 +195,14 @@ socket.on('pressure', function(value){
     $('#pressure').html(value);
 });
 
-var radiusBlock = 160
-
+var radiusBlock = 180
+var width = 400
 function DrawDefaultPattern(){
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
-        ctx.canvas.width = 450;
-        ctx.canvas.height = 250;
-        ctx.translate(225, 220)
+        ctx.canvas.width = width*2;
+        ctx.canvas.height = width;
+        ctx.translate(width, width-40)
         ctx.rotate(-Math.PI*10/180);
         for (var i = 0; i < 9; i++) {
             ctx.beginPath();
@@ -203,7 +210,7 @@ function DrawDefaultPattern(){
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.strokeRect(radiusBlock, -25, 50, 55);
+            ctx.strokeRect(radiusBlock, -25, 50, 60);
             ctx.rotate(-Math.PI*20/180);
         }    
         ctx.beginPath();
@@ -218,25 +225,25 @@ function DrawHitPattern(channel){
     if (canvas.getContext) {
         canvasReset = function(){}
         var ctx = canvas.getContext('2d');
-        ctx.canvas.width = 450;
-        ctx.canvas.height = 250;
-        ctx.translate(225, 220)
+        ctx.canvas.width = width*2;
+        ctx.canvas.height = width;
+        ctx.translate(width, width-40)
         ctx.fillStyle = "rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+",0,0.5)";
         ctx.rotate(-Math.PI*10/180);
         for (var i = 0; i < 9; i++) {
             if(i==9-channel){
                 ctx.beginPath();
                 ctx.lineWidth = 3
-                ctx.moveTo(250, (Math.random()-0.5)*50);
-                ctx.lineTo(-250, (Math.random()-0.5)*48);
+                ctx.moveTo(width, (Math.random()-0.5)*50);
+                ctx.lineTo(-width, (Math.random()-0.5)*48);
                 ctx.stroke();
             }
             ctx.lineWidth = 1
             ctx.beginPath();
             if(i == 9-channel){
-                ctx.fillRect(radiusBlock, -25, 50, 55);
+                ctx.fillRect(radiusBlock, -25, 50, 60);
             }
-            ctx.strokeRect(radiusBlock, -25, 50, 55);
+            ctx.strokeRect(radiusBlock, -25, 50, 60);
             ctx.rotate(-Math.PI*20/180);
         }    
         ctx.beginPath();
