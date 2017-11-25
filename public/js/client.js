@@ -249,12 +249,12 @@ function draw(){
         for (var i = 0; i < 9; i++) {
             for (var j = paticleList[9-i-1].length-1; j >=0 ; j--) {
                 ctx.fillStyle = "rgba(0,0,0,1)";
-                // ctx.beginPath();
-                // ctx.arc(paticleList[9-i-1][j].x,0,8,0,2*Math.PI);
-                // ctx.stroke();
-                // ctx.fill();
-                ctx.font="60px Georgia";
-                ctx.fillText("μ",paticleList[9-i-1][j].x,0);
+                ctx.beginPath();
+                ctx.arc(paticleList[9-i-1][j].x,0,8,0,2*Math.PI);
+                ctx.stroke();
+                ctx.fill();
+                // ctx.font="60px Georgia";
+//                ctx.fillText("μ",paticleList[9-i-1][j].x,0);
                 paticleList[9-i-1][j].move(1)
                 if(paticleList[9-i-1][j].x>=radiusBlock&&paticleList[9-i-1][j].x<=radiusBlock+50){
                     blockList[i].r = paticleList[9-i-1][j].r
