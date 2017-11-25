@@ -16,8 +16,43 @@ var ch_max = count.reduce(function(a,b){
     return Math.max(a,b);
 });
 
-
-
+var Particle = function(){
+    this.x = 500
+    this.v = 20
+    this.r = Math.random()
+    this.g = Math.random()
+    this.fillStyle = "rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+",0,0.5)"
+    this.move = function(scale) {
+        this.x -= (this.v*scale)
+    }
+}
+var Block = function(r, g, i){
+    this.r = r
+    this.g = g
+    this.i = i
+    this.decay = function(factor){
+        this.i-=factor
+        if(this.i<0.01){
+            this.i=0.;
+            // console.log('123')
+        }
+    }
+    this.fillStyle = function(){
+        if(this.i<0.001){
+            return "rgba(0,0,0,0)"
+        }else{
+            return "rgba("+Math.floor(this.r*255.)+","+Math.floor(this.g*255.)+",0,"+this.i+")"
+        }
+    }
+}
+var paticleList = [];
+var blockList = [];
+for (var i = 0; i < 9; i++) {
+    paticleList.push([]);
+    blockList.push(new Block(0., 0., 0.))
+}
+//center
+blockList.push(new Block(0., 0., 0.))
 
 var ctx = document.getElementById("count-degree");
 var button = document.getElementById("reset");
@@ -130,10 +165,13 @@ socket.on('strTime', function(serverSideStrTime){
     $('#totalTime').html(Math.round(Date.now()/1000) - strTime);
 });
 socket.on('hit', function(channel_number){
+    if(channel_number==0)return;
 	count[channel_number-1] += 1;
     count_angle.data.datasets[1].data = count;
     fitting()
-    DrawHitPattern(channel_number);
+    // DrawHitPattern(channel_number);
+    console.log(channel_number)
+    paticleList[channel_number-1].push(new Particle())
     totalHit += 1
     $('#totalHit').html(totalHit);
 });
@@ -197,71 +235,67 @@ socket.on('pressure', function(value){
 
 var radiusBlock = 180
 var width = 400
-function DrawDefaultPattern(){
-    if (canvas.getContext) {
-        var ctx = canvas.getContext('2d');
-        ctx.canvas.width = width*2;
-        ctx.canvas.height = width;
-        ctx.translate(width, width-40)
-        ctx.rotate(-Math.PI*10/180);
-        for (var i = 0; i < 9; i++) {
-            ctx.beginPath();
-            ctx.lineTo(radiusBlock,0);
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeRect(radiusBlock, -25, 50, 60);
-            ctx.rotate(-Math.PI*20/180);
-        }    
-        ctx.beginPath();
-        ctx.arc(0,0,25,0,Math.PI*2); 
-        ctx.stroke();
-        ctx.save();
-    }
-
-}
-var canvasReset = function(){}
-function DrawHitPattern(channel){
+function draw(){
     if (canvas.getContext) {
         canvasReset = function(){}
         var ctx = canvas.getContext('2d');
+        ctx.globalCompositeOperation = 'destination-over';
+
         ctx.canvas.width = width*2;
         ctx.canvas.height = width;
         ctx.translate(width, width-40)
-        ctx.fillStyle = "rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+",0,0.5)";
+        
         ctx.rotate(-Math.PI*10/180);
         for (var i = 0; i < 9; i++) {
-            if(i==9-channel){
-                ctx.beginPath();
-                ctx.lineWidth = 3
-                ctx.moveTo(width, (Math.random()-0.5)*50);
-                ctx.lineTo(-width, (Math.random()-0.5)*48);
-                ctx.stroke();
+            for (var j = paticleList[9-i-1].length-1; j >=0 ; j--) {
+                ctx.fillStyle = "rgba(0,0,0,1)";
+                // ctx.beginPath();
+                // ctx.arc(paticleList[9-i-1][j].x,0,8,0,2*Math.PI);
+                // ctx.stroke();
+                // ctx.fill();
+                ctx.font="60px Georgia";
+                ctx.fillText("μ",paticleList[9-i-1][j].x,0);
+                paticleList[9-i-1][j].move(1)
+                if(paticleList[9-i-1][j].x>=radiusBlock&&paticleList[9-i-1][j].x<=radiusBlock+50){
+                    blockList[i].r = paticleList[9-i-1][j].r
+                    blockList[i].g = paticleList[9-i-1][j].g
+                    blockList[i].i = 0.9
+                }
+                if(paticleList[9-i-1][j].x>=-25&&paticleList[9-i-1][j].x<=25){
+                    blockList[9].r = paticleList[9-i-1][j].r
+                    blockList[9].g = paticleList[9-i-1][j].g
+                    blockList[9].i = 0.9
+                }
+                if(paticleList[9-i-1][j].x<-width){
+                    paticleList[9-i-1].splice(j, 1)
+                }
             }
+            // if(i==9-channel){
+            //     ctx.beginPath();
+            //     ctx.lineWidth = 3
+            //     ctx.moveTo(width, (Math.random()-0.5)*50);
+            //     ctx.lineTo(-width, (Math.random()-0.5)*48);
+            //     ctx.stroke();
+            // }
             ctx.lineWidth = 1
+            ctx.fillStyle = blockList[i].fillStyle()
             ctx.beginPath();
-            if(i == 9-channel){
-                ctx.fillRect(radiusBlock, -25, 50, 60);
-            }
+            ctx.fillRect(radiusBlock, -25, 50, 60);
             ctx.strokeRect(radiusBlock, -25, 50, 60);
             ctx.rotate(-Math.PI*20/180);
+            blockList[i].decay(0.015)
         }    
+        ctx.fillStyle = blockList[9].fillStyle()
         ctx.beginPath();
         ctx.arc(0,0,25,0,Math.PI*2); 
         ctx.stroke();
         ctx.fill();
-        canvas.reset = function(){
-            DrawDefaultPattern();
-        }
-
-        setTimeout(canvasReset = function(){
-            DrawDefaultPattern()
-        }, 2000);
-
-
+        blockList[i].decay(0.02)
     }
+    window.requestAnimationFrame(draw)
 
 }
-DrawDefaultPattern()
+// DrawDefaultPattern()
+draw()
 
 
