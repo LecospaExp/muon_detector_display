@@ -1,5 +1,4 @@
-var socket = io('http://140.112.104.83:9487');
-var bgCounter = io('http://140.112.104.83:9487/bgCounter');
+var socket = io('http://localhost:9487');
 
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
