@@ -1,4 +1,5 @@
-var socket = io('http://localhost:9487');
+//var socket = io('http://192.168.8.104:9487');
+var socket = io('http://140.112.104.116:5001');
 
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
@@ -289,7 +290,7 @@ function draw(){
         ctx.arc(0,0,25,0,Math.PI*2); 
         ctx.stroke();
         ctx.fill();
-        blockList[i].decay(0.02)
+        blockList[i].decay(0.05)
     }
     window.requestAnimationFrame(draw)
 
