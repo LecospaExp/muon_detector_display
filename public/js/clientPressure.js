@@ -71,9 +71,6 @@ var pressureTimePlot = new Chart(cptPlot, {
         scaleLabel:{
             display: true,
             labelString:"Temperature(°C)",
-        },ticks:{
-            max: 40,
-            min: 25
         }
       }],
       xAxes: [{
@@ -155,8 +152,11 @@ socket.on("pressureTimeData", function(res){
     for (var i = res.length - 1; i >= 0; i--) {
         ptData.push({t: new Date(res[i]._id*3600*1000), y:Math.myround(res[i].pressure, 3)})
         ctData.push({t: new Date(res[i]._id*3600*1000), y:res[i].count})
-        TtData.push({t: new Date(res[i]._id*3600*1000), y:res[i].temp})
+        
         cpData.push({x: Math.myround(res[i].pressure, 3), y:res[i].count})
+        if(res[i].temp<=100 && res[i].temp>0){
+            TtData.push({t: new Date(res[i]._id*3600*1000), y:Math.myround(res[i].temp,3)})    
+        }
     }
     pressureTimePlot.data.datasets[0].data = ctData;
     pressureTimePlot.data.datasets[1].data = ptData;
