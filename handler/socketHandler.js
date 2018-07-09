@@ -8,6 +8,13 @@ module.exports = function (io, database) {
 			client.emit('strTime', client.handshake.session.startEvtTime);
 			console.log('[socket]Reset:'+client.handshake.session.startEvtTime)
 		});
+		client.on('getPressureTime', function(){
+			database.getGroupedDataInHours(function(res){
+				client.emit('pressureTimeData', res);	
+			})
+			
+			console.log('[socket]SendPressureTimeData')
+		});
 		client.on('fulltime', function(){
 			database.getEvtFromBeginning(function(res){
 				var totalCount = [0,0,0,0,0,0,0,0,0]
@@ -21,6 +28,7 @@ module.exports = function (io, database) {
 			})
 			database.getFirstEvt(function(res){
 				client.handshake.session.startEvtTime = res.time
+				client.handshake.session.save()
 				console.log('[socket]Fulltime:'+client.handshake.session.startEvtTime)
 				client.emit('strTime', client.handshake.session.startEvtTime);
 			})
