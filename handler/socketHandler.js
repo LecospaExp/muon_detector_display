@@ -7,7 +7,25 @@ module.exports = function (io, database) {
 			client.handshake.session.save()
 			client.emit('strTime', client.handshake.session.startEvtTime);
 			console.log('[socket]Reset:'+client.handshake.session.startEvtTime)
-		})		
+		});
+		client.on('fulltime', function(){
+			database.getEvtFromBeginning(function(res){
+				var totalCount = [0,0,0,0,0,0,0,0,0]
+				for (var i = 0; i < res.length; i++) {
+					if(res[i]._id>=1&&res[i]._id<=9){
+						totalCount[res[i]._id-1] = res[i].sum
+					}
+				}
+				client.emit('CurCount', totalCount);
+				console.log("[socket]totalCount:"+totalCount)
+			})
+			database.getFirstEvt(function(res){
+				client.handshake.session.startEvtTime = res.time
+				console.log('[socket]Fulltime:'+client.handshake.session.startEvtTime)
+				client.emit('strTime', client.handshake.session.startEvtTime);
+			})
+
+		})			
 		if(!client.handshake.session.startEvtTime){
 			client.handshake.session.startEvtTime = time.time()
 			client.handshake.session.save()

@@ -37,6 +37,33 @@ module.exports = function(app, db){
 						callback(res)
 					}
 			})
+		},
+		'getEvtFromBeginning':function(callback){
+			db.events.aggregate({
+					$match:{}
+				},{
+					$group:{
+						_id:"$channel",
+						sum:{$sum:1}
+					}
+				},{
+					$sort:{"_id":1}
+				}, function(err, res){
+					if(err){
+						console.log(err)
+					}else{
+						callback(res)
+					}
+			})
+		},
+		'getFirstEvt':function(callback){
+			db.events.findOne({},function(err, res){
+					if(err){
+						console.log(err)
+					}else{
+						callback(res)
+					}
+			})
 		}
 	}
 }
