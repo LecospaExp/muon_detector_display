@@ -1,5 +1,5 @@
 //var socket = io('http://192.168.8.104:9487');
-var socket = io('http://140.112.104.116:5001');
+var socket = io('http://140.112.104.115:5001');
 
 Math.radians = function(degrees) {
 	return degrees * Math.PI / 180;
