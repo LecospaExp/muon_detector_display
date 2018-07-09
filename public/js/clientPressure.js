@@ -67,11 +67,12 @@ var pressureTimePlot = new Chart(cptPlot, {
       }, {
         id: 'temp',
         type: 'linear',
-        
         position: 'right',
         scaleLabel:{
             display: true,
             labelString:"Temperature(°C)",
+        },ticks:{
+            max: 40,
         }
       }],
       xAxes: [{
