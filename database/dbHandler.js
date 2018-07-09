@@ -64,6 +64,30 @@ module.exports = function(app, db){
 						callback(res)
 					}
 			})
+		},
+		'getGroupedDataInHours':function(callback){
+			db.events.aggregate([
+				{$project:{
+					channel:1, 
+					pressure:1, 
+					time:{
+						$divide:[{
+							$subtract:["$time",{$mod:["$time", 3600]}]}, 3600]
+						}
+					}
+				},{$group:{
+					_id: "$time", 
+					pressure:{$avg:"$pressure"}, 
+					count:{$sum:1}}
+				} , {$sort:
+					{_id:-1}
+				}],function(err, res){
+					if(err){
+						console.log(err)
+					}else{
+						callback(res)
+					}
+			})
 		}
 	}
 }

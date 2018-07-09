@@ -47,10 +47,10 @@
 			<a class="navbar-brand" href="#">Muon Detector</a>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active">
+					<li class="nav-item ">
 						<a class="nav-link" href="/">Realtime</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href="/pressure">pressure</a>
 					</li>
 					<!-- <li class="nav-item"> -->
@@ -71,61 +71,23 @@
 			<div class="col-sm-6">
 				<div class="card" style="">
 					<div class="card-body">
-						<h4 class="card-title">Hit distribution</h4>
+						<h4 class="card-title">Pressure/Count-Time</h4>
 					</div>
 					<div class="card-body">
-						<canvas id="count-degree" style="width:100%;height: 60vh"></canvas>
-					</div>
-					<div class="card-body" style="text-align: center; padding-left:5rem">
-						<a href="#" class="btn btn-warning btn-lg  ml-auto" onclick="reset()" style="font-size: xx-large;">Touch here to reset</a>
+						<canvas id="pressure-time" style="width:100%;height: 60vh"></canvas>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="card" style="">
-							<div class="card-body">
-								<h4 class="card-title data-title">Hit rate</h4>
-								<p class="card-text"><span class=" data-text" id="hitRate">0</span>&nbsp;Hz</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="card" style="">
-							<div class="card-body">
-								<h4 class="card-title data-title">Air pressure</h4>
-								<p class="card-text"><span class=" data-text" id="pressure">1033.6</span>&nbsp;hPa</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="card" style="">
-							<div class="card-body">
-								<h4 class="card-title data-title">Total hit</h4>
-								<p class="card-text"><span class=" data-text" id="totalHit">0</span>&nbsp;</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="card" style="">
-							<div class="card-body">
-								<h4 class="card-title data-title">Total time</h4>
-								<p class="card-text"><span class=" data-text" id="totalTime">0</span>&nbsp;s</p>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="card" style="">
 					<div class="card-body">
-						<h4 class="card-title">Hit pattern</h4>
+						<h4 class="card-title">Pressure-count</h4>
 					</div>
 					<div class="card-body">
-						<div class="canvas-container">
-							<canvas id="hit-pattern" style=""></canvas>
-						</div>
+						<canvas id="pressure-time" style="width:100%;height: 60vh"></canvas>
 					</div>
 				</div>
+
 				
 			</div>
 		</div>		
@@ -151,7 +113,7 @@
     <script src="/js/bootstrap.min.js"></script>
 	<script src="/js/Chart.js"></script>
 	<script src="/js/regression.js"></script> 
-	<script src="/js/client.js"></script>   
+	<script src="/js/clientPressure.js"></script>   
 
 </body>
 </html>

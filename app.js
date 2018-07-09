@@ -1,6 +1,6 @@
 var url         = require('url'), 
     fs          = require('fs'), 
-    serialport  = require("serialport"),
+    // serialport  = require("serialport"),
     express     = require('express'),
     app         = express(),
     path        = require('path'),
@@ -42,8 +42,6 @@ app.use(session)
 // app.use(i18n); //multilang
 
 io.use(sharedsession(session, cookieParser()));
-var router = require('./router.js')();
-app.use('/', router);
 
 
 
@@ -55,3 +53,5 @@ var baro    = require('./handler/barometerHandler.js')(socket, BAROconfig, datab
 require('./handler/serialPortHandler.js')(socket, database, SPconfig, baro);
 
 
+var router = require('./router.js')(database);
+app.use('/', router);
