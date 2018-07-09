@@ -73,6 +73,7 @@ var pressureTimePlot = new Chart(cptPlot, {
             labelString:"Temperature(°C)",
         },ticks:{
             max: 40,
+            min: 25
         }
       }],
       xAxes: [{
