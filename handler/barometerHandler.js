@@ -9,6 +9,7 @@ module.exports = function(socket, config, database) {
 		address : 0X77
 	}, "barometer");
 	var curPressure = 0;
+	var curTemp = 25;
 	BMP180.fetch(function(err, data) {
 		if(err) {
 			console.error("An error occured!");
@@ -20,6 +21,9 @@ module.exports = function(socket, config, database) {
 			socket.pressureEvent(curPressure);
 			console.log(curPressure);
 		}
+		if(data.type='Temperature'){
+			curTemp = data.value;
+		}
 	});
 	BMP180.fetchInterval(function(err, data) {
 		if(err) {
@@ -30,10 +34,17 @@ module.exports = function(socket, config, database) {
 		if(data.type=='Pressure'){
 			curPressure = Math.myround((data.value/100+curPressure*(config.smoothFactor-1))/config.smoothFactor,2)
 			socket.pressureEvent(curPressure);
-			console.log(curPressure);
+			console.log("[baro]Pressure:"+curPressure);
+		}
+		if(data.type=='Temperature'){
+			curTemp = Math.myround((data.value+curTemp*(config.smoothFactor-1))/config.smoothFactor,2)
+			socket.tempEvent(curTemp);
+			console.log("[baro]Temp:"+curTemp);
 		}
 	}, 5); // Fetch data every 5 seconds 
 	return {
-		getCurrentPressure: function(){return curPressure;}
+		getCurrentPressure: function(){return curPressure;},
+		getCurrentTemperature: function(){return curTemp;}
+
 	}
 }

@@ -3,8 +3,8 @@ var Event = require('./event.js');
 module.exports = function(app, db){
 
 	return {
-		'addNewEvent':function(Channel, Pressure, hitTime){
-			db.events.insert({time: hitTime, channel: Channel, pressure: Pressure}, function(err, res){
+		'addNewEvent':function(Channel, Pressure, hitTime, temp){
+			db.events.insert({time: hitTime, channel: Channel, pressure: Pressure, temperature: temp}, function(err, res){
 				if(err){
 					console.error('[DB]'+err);
 				}

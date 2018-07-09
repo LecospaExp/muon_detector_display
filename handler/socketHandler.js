@@ -62,6 +62,9 @@ module.exports = function (io, database) {
 		},
 		'pressureEvent':function(value){
 			io.sockets.emit('pressure', value)
+		},
+		'tempEvent':function(value){
+			io.sockets.emit('temperature', value)
 		}
 	}
 }
