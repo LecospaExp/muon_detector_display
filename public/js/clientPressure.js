@@ -18,7 +18,7 @@ var ch_max = count.reduce(function(a,b){
 
 var result; // Fitting function.
 var fit_count = [];
-
+var ctx = document.getElementById("pressure-time")
 
 var count_angle = new Chart(ctx, {
 	type: "line",
