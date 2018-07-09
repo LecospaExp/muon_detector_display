@@ -242,8 +242,12 @@ function fulltime() {
 // button.onclick = function() {reset()};
 
 socket.on('pressure', function(value){
-	console.log("[pressure] "+value);
+    console.log("[pressure] "+value);
     $('#pressure').html(value);
+});
+socket.on('temperature', function(value){
+    console.log("[temperature] "+value);
+    $('#temperature').html(value);
 });
 
 var radiusBlock = 180

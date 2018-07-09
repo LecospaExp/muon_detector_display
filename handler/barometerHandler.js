@@ -22,7 +22,7 @@ module.exports = function(socket, config, database) {
 			console.log(curPressure);
 		}
 		if(data.type='Temperature'){
-			curTemp = data.value;
+			curTemp = 25;
 		}
 	});
 	BMP180.fetchInterval(function(err, data) {
@@ -37,7 +37,7 @@ module.exports = function(socket, config, database) {
 			console.log("[baro]Pressure:"+curPressure);
 		}
 		if(data.type=='Temperature'){
-			curTemp = Math.myround((data.value+curTemp*(config.smoothFactor-1))/config.smoothFactor,2)
+			curTemp = Math.myround(data.value,2)
 			socket.tempEvent(curTemp);
 			console.log("[baro]Temp:"+curTemp);
 		}
