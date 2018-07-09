@@ -34,6 +34,13 @@ var pressureTimePlot = new Chart(cptPlot, {
       borderColor: "#ffc268",
       fill: false,
       data: []
+    },{
+      label: 'temp',
+      type: "line",
+      yAxisID: 'temp',
+      borderColor: "#fc7e7e",
+      fill: false,
+      data: []
     }]
   },
   options: {
@@ -56,6 +63,15 @@ var pressureTimePlot = new Chart(cptPlot, {
         scaleLabel:{
             display: true,
             labelString:"Pressure(hPa)",
+        }
+      }, {
+        id: 'temp',
+        type: 'linear',
+        
+        position: 'right',
+        scaleLabel:{
+            display: true,
+            labelString:"Temperature(°C)",
         }
       }],
       xAxes: [{
@@ -133,14 +149,16 @@ socket.on("pressureTimeData", function(res){
     var ptData = [];
     var ctData = [];
     var cpData = [];
-    var tLabel = [];
+    var TtData = [];
     for (var i = res.length - 1; i >= 0; i--) {
         ptData.push({t: new Date(res[i]._id*3600*1000), y:Math.myround(res[i].pressure, 3)})
         ctData.push({t: new Date(res[i]._id*3600*1000), y:res[i].count})
+        TtData.push({t: new Date(res[i]._id*3600*1000), y:res[i].temp})
         cpData.push({x: Math.myround(res[i].pressure, 3), y:res[i].count})
     }
     pressureTimePlot.data.datasets[0].data = ctData;
     pressureTimePlot.data.datasets[1].data = ptData;
+    pressureTimePlot.data.datasets[2].data = TtData;
     pressureTimePlot.update();
 
 
@@ -150,4 +168,5 @@ socket.on("pressureTimeData", function(res){
 
 function resizeHist(){
     pressureTimePlot.update();
+    pressureCountPlot.update();
 }

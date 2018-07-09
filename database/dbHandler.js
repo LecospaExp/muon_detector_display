@@ -78,6 +78,7 @@ module.exports = function(app, db){
 				},{$group:{
 					_id: "$time", 
 					pressure:{$avg:"$pressure"}, 
+					temp:{$avg:"$temperature"}, 
 					count:{$sum:1}}
 				} , {$sort:
 					{_id:-1}
