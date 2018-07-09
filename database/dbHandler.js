@@ -70,6 +70,7 @@ module.exports = function(app, db){
 				{$project:{
 					channel:1, 
 					pressure:1, 
+					temperature:1
 					time:{
 						$divide:[{
 							$subtract:["$time",{$mod:["$time", 3600]}]}, 3600]
